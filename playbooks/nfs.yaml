@@ -1,0 +1,85 @@
+---
+
+- name: running play for nfs servers
+  hosts: nfs
+  become: yes
+
+  # prompts for config
+  vars_prompt:
+    - name: "vg_name"
+      prompt: "Enter the name of the volume group here"
+      private: no
+    
+    - name: "lv_name"
+      prompt: "Enter the name of the logical volume here"
+      private: no
+    
+    - name: "lv_size"
+      prompt: "Enter the size of the logical volume here"
+      private: no
+
+
+  tasks:
+  # partition creation
+  - name: "create partitions on devices"
+    block:
+      - name: Install parted
+        package:
+          name: parted
+          state: present
+      
+      - name: add new partition on /dev/xvdb
+        parted:
+          device: "/dev/xvdb"
+          number: "1"
+          part_type: primary
+          flags: [ lvm ]
+          state: present
+          part_start: "{{ device_info.partitions[0].end + 1}}MiB"
+          part_end: "100%"
+
+      - name: add new partition on /dev/xvdc
+        parted:
+          device: "/dev/xvdc"
+          number: "1"
+          part_type: primary
+          flags: [ lvm ]
+          state: present
+          part_start: "{{ device_info.partitions[0].end + 1}}MiB"
+          part_end: "100%"
+
+      - name: add new partition on /dev/xvdd
+        parted:
+          device: "/dev/xvdd"
+          number: "1"
+          part_type: primary
+          flags: [ lvm ]
+          state: present
+          part_start: "{{ device_info.partitions[0].end + 1}}MiB"
+          part_end: "100%"
+
+  # install of lvm
+  - name: Install lvm
+    yum:
+      name: lvm2
+      state: present
+
+  # logical volume creation
+  - name: create "{{ vg_name }}" volume group
+    lvg:
+      vg: "{{ vg_name }}"
+      pvs: "/dev/xvdb1,/dev/xvdc1,/dev/xvdd1"
+      force: no
+      state: present
+
+  - name: create the "{{ lv_name }}" logical volume
+    lvol:
+      vg: "{{ vg_name }}"
+      lv: "{{ lv_name }}"
+      size: "{{ lv_size }}"
+      active: yes
+      force: no
+      state: present
+
+# filesystem, mount, fstab ...
+

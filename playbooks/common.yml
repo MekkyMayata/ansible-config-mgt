@@ -1,7 +1,7 @@
 ---
 
-- name: play for all hosts
-  hosts: all
+- name: play for RHEL hosts
+  hosts: nfs:webservers:jenkins:lb
   become: yes
 
   tasks:
@@ -15,3 +15,6 @@
       name: chronyd
       state: started
       enabled: true
+
+- name: loading play for NFS server(s)
+  import_playbook: nfs.yaml
