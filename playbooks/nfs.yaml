@@ -10,10 +10,18 @@
       prompt: "Enter the name of the volume group here"
       private: no
     
-    - name: "lv_name"
-      prompt: "Enter the name of the logical volume here"
+    - name: "lv1_name"
+      prompt: "Enter the name of the first logical volume here"
       private: no
     
+    - name: "lv2_name"
+      prompt: "Enter the name of the second logical volume here"
+      private: no
+
+    - name: "lv3_name"
+      prompt: "Enter the name of the third logical volume here"
+      private: no
+
     - name: "lv_size"
       prompt: "Enter the size of the logical volume here"
       private: no
@@ -35,7 +43,7 @@
           part_type: primary
           flags: [ lvm ]
           state: present
-          part_start: "{{ device_info.partitions[0].end + 1}}MiB"
+          part_start: "0%"
           part_end: "100%"
 
       - name: add new partition on /dev/xvdc
@@ -45,7 +53,7 @@
           part_type: primary
           flags: [ lvm ]
           state: present
-          part_start: "{{ device_info.partitions[0].end + 1}}MiB"
+          part_start: "0%"
           part_end: "100%"
 
       - name: add new partition on /dev/xvdd
@@ -55,7 +63,7 @@
           part_type: primary
           flags: [ lvm ]
           state: present
-          part_start: "{{ device_info.partitions[0].end + 1}}MiB"
+          part_start: "0%"
           part_end: "100%"
 
   # install of lvm
@@ -72,10 +80,28 @@
       force: no
       state: present
 
-  - name: create the "{{ lv_name }}" logical volume
+  - name: create the "{{ lv1_name }}" logical volume
     lvol:
       vg: "{{ vg_name }}"
-      lv: "{{ lv_name }}"
+      lv: "{{ lv1_name }}"
+      size: "{{ lv_size }}"
+      active: yes
+      force: no
+      state: present
+
+  - name: create the "{{ lv2_name }}" logical volume
+    lvol:
+      vg: "{{ vg_name }}"
+      lv: "{{ lv2_name }}"
+      size: "{{ lv_size }}"
+      active: yes
+      force: no
+      state: present
+
+  - name: create the "{{ lv3_name }}" logical volume
+    lvol:
+      vg: "{{ vg_name }}"
+      lv: "{{ lv3_name }}"
       size: "{{ lv_size }}"
       active: yes
       force: no
