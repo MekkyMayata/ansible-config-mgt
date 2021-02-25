@@ -25,6 +25,10 @@
     - name: "lv_size"
       prompt: "Enter the size of the logical volume here"
       private: no
+    
+    - name: "fs"
+      prompt: "Enter the type of filesystem to format logical volumes with"
+      private: no
 
 
   tasks:
@@ -107,5 +111,45 @@
       force: no
       state: present
 
-# filesystem, mount, fstab ...
+  # formatting the lvs with choosen filesystem
+  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/mapper/"{{ vg_name }}-{{ lv1_name }}
+    filesystem:
+      fstype: "{{ fs }}"
+      dev: "/dev/mapper/{{ vg_name }}-{{ lv1_name}}"
+      force: no
 
+  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/mapper/"{{ vg_name }}-{{ lv2_name }}
+    filesystem:
+      fstype: "{{ fs }}"
+      dev: "/dev/mapper/{{ vg_name }}-{{ lv2_name}}"
+      force: no
+
+  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/mapper/"{{ vg_name }}-{{ lv3_name }}
+    filesystem:
+      fstype: "{{ fs }}"
+      dev: "/dev/mapper/{{ vg_name }}-{{ lv3_name}}"
+      force: no
+
+  # create mount points
+  - name: creating a directory to mount the filesystems
+    file:
+      path: "{{ dir }}"
+      state: directory
+      mode: 0755
+    loop:
+      - /mnt/opt
+      - /mnt/apps
+      - /mnt/logs
+  
+  # mount the filesystems
+  - name: mounting the {{ fs }} filesystem
+    mount:
+      path: "{{ item.dir }}"
+      src: "/dev/mapper/{{ vg_name}}-{{ item.lv }}"
+      fstype: "{{ fs }}"
+      opts: nosuid,noexec,defaults
+      state: mounted
+    loop:
+      - { dir: '/mnt/opt', lv: '{{ lv1_name }}' }
+      - { dir: '/mnt/apps', lv: '{{ lv2_name }}' }
+      - { dir: '/mnt/logs', lv: '{{ lv3_name }}' }
