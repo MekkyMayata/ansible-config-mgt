@@ -141,7 +141,7 @@
       - /mnt/html
       - /mnt/logs
   
-  # mount the filesystems
+  # mount the filesystems by label (UUID will be splendid though!)
   - name: mounting the {{ fs }} filesystem
     mount:
       path: "{{ item.dir }}"
@@ -153,3 +153,15 @@
       - { dir: '/mnt/opt', lv: '{{ lv1_name }}' }
       - { dir: '/mnt/html', lv: '{{ lv2_name }}' }
       - { dir: '/mnt/logs', lv: '{{ lv3_name }}' }
+  
+  # persist mounts
+  - name: updating the /etc/fstab file
+    ansible.builtin.lineinfile:
+      path: /etc/fstab
+      line: "/dev/{{ vg_name }}/{{ item.lv }} {{ item.dir }} {{ fs }} defaults 0 0"
+    loop:
+      - { dir: '/mnt/opt', lv: '{{ lv1_name }}' }
+      - { dir: '/mnt/html', lv: '{{ lv2_name }}' }
+      - { dir: '/mnt/logs', lv: '{{ lv3_name }}' }
+  
+  
