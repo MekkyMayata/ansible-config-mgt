@@ -112,22 +112,22 @@
       state: present
 
   # formatting the lvs with choosen filesystem
-  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/mapper/"{{ vg_name }}-{{ lv1_name }}
+  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/{{ vg_name }}/{{ lv1_name }}"
     filesystem:
       fstype: "{{ fs }}"
-      dev: "/dev/mapper/{{ vg_name }}-{{ lv1_name}}"
+      dev: "/dev/{{ vg_name }}/{{ lv1_name }}"
       force: no
 
-  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/mapper/"{{ vg_name }}-{{ lv2_name }}
+  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/{{ vg_name }}/{{ lv2_name }}"
     filesystem:
       fstype: "{{ fs }}"
-      dev: "/dev/mapper/{{ vg_name }}-{{ lv2_name}}"
+      dev: "/dev/{{ vg_name }}/{{ lv2_name }}"
       force: no
 
-  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/mapper/"{{ vg_name }}-{{ lv3_name }}
+  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/{{ vg_name }}/{{ lv3_name }}"
     filesystem:
       fstype: "{{ fs }}"
-      dev: "/dev/mapper/{{ vg_name }}-{{ lv3_name}}"
+      dev: "/dev/{{ vg_name }}/{{ lv3_name }}"
       force: no
 
   # create mount points
@@ -145,7 +145,7 @@
   - name: mounting the {{ fs }} filesystem
     mount:
       path: "{{ item.dir }}"
-      src: "/dev/mapper/{{ vg_name}}-{{ item.lv }}"
+      src: "/dev/{{ vg_name }}/{{ item.lv }}"
       fstype: "{{ fs }}"
       opts: nosuid,noexec,defaults
       state: mounted
