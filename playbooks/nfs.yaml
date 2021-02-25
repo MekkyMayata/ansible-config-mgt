@@ -138,7 +138,7 @@
       mode: 0755
     loop:
       - /mnt/opt
-      - /mnt/apps
+      - /mnt/html
       - /mnt/logs
   
   # mount the filesystems
@@ -151,5 +151,5 @@
       state: mounted
     loop:
       - { dir: '/mnt/opt', lv: '{{ lv1_name }}' }
-      - { dir: '/mnt/apps', lv: '{{ lv2_name }}' }
+      - { dir: '/mnt/html', lv: '{{ lv2_name }}' }
       - { dir: '/mnt/logs', lv: '{{ lv3_name }}' }
