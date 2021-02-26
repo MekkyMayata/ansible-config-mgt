@@ -18,8 +18,8 @@
 
 # configure nfs server
 - name: loading play for NFS server(s)
-  import_playbook: nfs.yaml
+  import_playbook: nfs.yml
 
 # configure database server
 - name: loading play for database server(s)
-  import_playbook: db.yaml
+  import_playbook: db.yml
