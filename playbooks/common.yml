@@ -16,5 +16,12 @@
       state: started
       enabled: true
 
+# configure nfs server, notify others
 - name: loading play for NFS server(s)
   import_playbook: nfs.yaml
+  notify: 
+    - loading play for database server(s)
+
+  handlers:
+    - name: loading play for database server(s)
+      import_playbook: db.yaml
