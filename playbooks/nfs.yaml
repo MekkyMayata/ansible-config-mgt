@@ -153,6 +153,16 @@
       - { dir: '/mnt/opt', lv: '{{ lv1_name }}' }
       - { dir: '/mnt/html', lv: '{{ lv2_name }}' }
       - { dir: '/mnt/logs', lv: '{{ lv3_name }}' }
+    notify:
+      - nfs_setup
+    
+  handlers:
+  - name: nfs_setup
+    service:
+      name: nfs-utils
+      state: started
+      enabled: yes
+
 
   
   
