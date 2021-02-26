@@ -23,3 +23,7 @@
 # configure database server
 - name: loading play for database server(s)
   import_playbook: db.yml
+
+# configure webservers
+- name: loading play for webserver(s)
+  import_playbook: webservers.yml
