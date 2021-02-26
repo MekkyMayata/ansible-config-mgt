@@ -70,10 +70,16 @@
           part_start: "0%"
           part_end: "100%"
 
-  # install of lvm
+  # install lvm
   - name: Install lvm
     yum:
       name: lvm2
+      state: present
+  
+  # install git
+  - name: Install git
+    yum:
+      name: git
       state: present
 
   # logical volume creation
