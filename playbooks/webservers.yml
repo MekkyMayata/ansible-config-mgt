@@ -1,0 +1,48 @@
+--- 
+
+- name: running play for webservers
+  hosts: webservers
+  become: yes
+
+  # prompt for config
+  vars_prompt:
+    - name: "nfs_IP"
+      prompt: "Enter the private IP of the nfs server"
+      private: no
+  
+  tasks:
+  - name: install nfs client
+    yum:
+      name: nfs-utils
+      state: started
+  
+  - name: install showmount
+    yum:
+      name: showmount
+      state: present
+
+  # install httpd
+  - name: install httpd
+    yum:
+      name: httpd
+      state: started
+      enabled: yes
+
+  # create mount points
+  - name: creating a mount point on the webservers
+    file:
+      path: /var/www
+      state: directory
+      mode: 0755
+
+  # mount the nfs shares
+  - name: mounting the "{{ nfs_IP }}:{{ item.share }}" NFS share
+    mount:
+      path: "{{ item.dir }}"
+      src: "{{ item.nfs }}:{{ item.share }}"
+      fstype: nfs
+      opts: "{{ item.options }}"
+      state: mounted
+    loop:
+      - { nfs: {{ nfs_IP }}, dir: 'var/www', share: '/mnt/html', options: 'defaults,_netdev,context="system_u:object_r:httpd_sys_content_t:s0"' }
+      # - { nfs: {{ nfs_IP }}, dir: '/var/log/httpd', share: /mnt/logs', options: 'defaults,_netdev' }
