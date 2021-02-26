@@ -1,0 +1,174 @@
+---
+
+- name: running play for nfs servers
+  hosts: nfs
+  become: yes
+
+  # prompts for config
+  vars_prompt:
+    - name: "vg_name"
+      prompt: "Enter the name of the volume group here"
+      private: no
+    
+    - name: "lv1_name"
+      prompt: "Enter the name of the first logical volume here"
+      private: no
+    
+    - name: "lv2_name"
+      prompt: "Enter the name of the second logical volume here"
+      private: no
+
+    - name: "lv3_name"
+      prompt: "Enter the name of the third logical volume here"
+      private: no
+
+    - name: "lv_size"
+      prompt: "Enter the size of the logical volume here"
+      private: no
+    
+    - name: "fs"
+      prompt: "Enter the type of filesystem to format logical volumes with"
+      private: no
+
+
+  tasks:
+  # partition creation
+  - name: "create partitions on devices"
+    block:
+      - name: Install parted
+        package:
+          name: parted
+          state: present
+      
+      - name: add new partition on /dev/xvdb
+        parted:
+          device: "/dev/xvdb"
+          number: "1"
+          part_type: primary
+          flags: [ lvm ]
+          state: present
+          part_start: "0%"
+          part_end: "100%"
+
+      - name: add new partition on /dev/xvdc
+        parted:
+          device: "/dev/xvdc"
+          number: "1"
+          part_type: primary
+          flags: [ lvm ]
+          state: present
+          part_start: "0%"
+          part_end: "100%"
+
+      - name: add new partition on /dev/xvdd
+        parted:
+          device: "/dev/xvdd"
+          number: "1"
+          part_type: primary
+          flags: [ lvm ]
+          state: present
+          part_start: "0%"
+          part_end: "100%"
+
+  # install lvm
+  - name: Install lvm
+    yum:
+      name: lvm2
+      state: present
+  
+  # install git
+  - name: Install git
+    yum:
+      name: git
+      state: present
+
+  # logical volume creation
+  - name: create "{{ vg_name }}" volume group
+    lvg:
+      vg: "{{ vg_name }}"
+      pvs: "/dev/xvdb1,/dev/xvdc1,/dev/xvdd1"
+      force: no
+      state: present
+
+  - name: create the "{{ lv1_name }}" logical volume
+    lvol:
+      vg: "{{ vg_name }}"
+      lv: "{{ lv1_name }}"
+      size: "{{ lv_size }}"
+      active: yes
+      force: no
+      state: present
+
+  - name: create the "{{ lv2_name }}" logical volume
+    lvol:
+      vg: "{{ vg_name }}"
+      lv: "{{ lv2_name }}"
+      size: "{{ lv_size }}"
+      active: yes
+      force: no
+      state: present
+
+  - name: create the "{{ lv3_name }}" logical volume
+    lvol:
+      vg: "{{ vg_name }}"
+      lv: "{{ lv3_name }}"
+      size: "{{ lv_size }}"
+      active: yes
+      force: no
+      state: present
+
+  # formatting the lvs with choosen filesystem
+  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/{{ vg_name }}/{{ lv1_name }}"
+    filesystem:
+      fstype: "{{ fs }}"
+      dev: "/dev/{{ vg_name }}/{{ lv1_name }}"
+      force: no
+
+  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/{{ vg_name }}/{{ lv2_name }}"
+    filesystem:
+      fstype: "{{ fs }}"
+      dev: "/dev/{{ vg_name }}/{{ lv2_name }}"
+      force: no
+
+  - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/{{ vg_name }}/{{ lv3_name }}"
+    filesystem:
+      fstype: "{{ fs }}"
+      dev: "/dev/{{ vg_name }}/{{ lv3_name }}"
+      force: no
+
+  # create mount points
+  - name: creating a directory to mount the filesystems
+    file:
+      path: "{{ item }}"
+      state: directory
+      mode: 0755
+    loop:
+      - /mnt/opt
+      - /mnt/html
+      - /mnt/logs
+  
+  # mount the filesystems by label (UUID will be splendid though!)
+  - name: mounting the {{ fs }} filesystem
+    mount:
+      path: "{{ item.dir }}"
+      src: "/dev/{{ vg_name }}/{{ item.lv }}"
+      fstype: "{{ fs }}"
+      opts: nosuid,noexec,defaults
+      state: mounted
+    loop:
+      - { dir: '/mnt/opt', lv: '{{ lv1_name }}' }
+      - { dir: '/mnt/html', lv: '{{ lv2_name }}' }
+      - { dir: '/mnt/logs', lv: '{{ lv3_name }}' }
+    notify:
+      - nfs_setup
+    
+  handlers:
+  - name: nfs_setup
+    service:
+      name: nfs-utils
+      state: started
+      enabled: yes
+
+
+  
+  

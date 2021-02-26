@@ -1,0 +1,29 @@
+---
+
+- name: play for RHEL hosts
+  hosts: nfs:webservers:jenkins:lb
+  become: yes
+
+  tasks:
+  - name: Install chrony package
+    yum:
+      name: chrony
+      state: latest
+  
+  - name: Enable chronyd daemon
+    service:
+      name: chronyd
+      state: started
+      enabled: true
+
+# configure nfs server
+- name: loading play for NFS server(s)
+  import_playbook: nfs.yml
+
+# configure database server
+- name: loading play for database server(s)
+  import_playbook: db.yml
+
+# configure webservers
+- name: loading play for webserver(s)
+  import_playbook: webservers.yml
