@@ -1,0 +1,30 @@
+---
+# tasks file for dbserver
+- name: running play for db server(s)
+  hosts: db
+  become: yes
+
+  tasks:
+  # install mysql
+  - name: "install mysql-server"
+    apt:
+      name: mysql-server
+      state: present
+      enabled: yes
+
+  # setup bind-address config
+  - name: update bind address
+    ansible.builtin.lineinfile:
+      path: /etc/mysql/mysql.conf.d/mysqld.cnf
+      regexp: '^bind-address'
+      line: bind-address=0.0.0.0
+    notify:
+      - restart_mysql
+  
+  # handlers
+  handlers:
+    - name: restart_mysql
+      service:
+        name: mysql
+        state: restarted
+        
