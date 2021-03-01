@@ -1,0 +1,11 @@
+---
+
+- name: play for RHEL hosts
+  become: yes
+
+  tasks:
+  - name: Install chrony package
+    yum:
+      name: chrony
+      state: started
+      enabled: true
