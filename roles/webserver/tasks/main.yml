@@ -1,0 +1,83 @@
+---
+# tasks file for webserver
+# Install and configure Apache. Ensure to use the templates section to deploy apache configuration file.
+- name: running play for webservers
+  hosts: webservers
+  become: yes
+
+  # prompt for config
+  vars_prompt:
+    - name: "nfs_IP"
+      prompt: "Enter the private IP of the nfs server"
+      private: no
+  
+  tasks:
+  - name: install nfs client
+    yum:
+      name: nfs-utils
+      state: started
+  
+  - name: install showmount
+    yum:
+      name: showmount
+      state: present
+
+  # install httpd
+  - name: install httpd
+    yum:
+      name: httpd
+      state: started
+      enabled: yes
+
+  # create mount points
+  - name: creating a mount point on the webservers
+    file:
+      path: /var/www
+      state: directory
+      mode: 0755
+
+  # mount the nfs shares
+  - name: mounting the "{{ nfs_IP }}:{{ item.share }}" NFS share
+    mount:
+      path: "{{ item.dir }}"
+      src: "{{ item.nfs }}:{{ item.share }}"
+      fstype: nfs
+      opts: "{{ item.options }}"
+      state: mounted
+    loop:
+      - { nfs: {{ nfs_IP }}, dir: '/var/www', share: '/mnt/html', options: 'defaults,_netdev,context="system_u:object_r:httpd_sys_content_t:s0"' }
+      # - { nfs: {{ nfs_IP }}, dir: '/var/log/httpd', share: /mnt/logs', options: 'defaults,_netdev' }
+
+  # update the motd file across all webservers
+  - name: updating the motd file
+    ansible.builtin.template:
+      src: motd-facts.j2
+      dest: /etc/motd
+      owner: root
+      group: root
+      mode: 0644
+
+  # update the apache config file
+  - name: template the apache config file to /etc/httpd/sites-available/tooling.conf
+    ansible.builtin.template:
+      src: apache-config.j2
+      dest: /etc/httpd/sites-available/tooling.conf
+      owner: root
+      group: root
+      mode: 0644
+
+  # create a virtual host directory 
+  - name: creating apache virtual host directory
+    command: mkdir /etc/httpd/sites-available /etc/httpd/sites-enabled
+
+  # setup importingg of virtual host files from external
+  - name: updating base apache config to include virtual hosts in site-enabled directory
+    lineinfile:
+      dest: /etc/httpd/conf/httpd.conf
+      line: IncludeOptional sites-enabled/*.conf
+      owner: root
+  
+  # set up symbolic link for virtual host file
+  - name: setiing symbolic link for server config file
+    command: ln -s /etc/httpd/sites-available/tooling.conf /etc/httpd/sites-enabled/tooling.conf
+  
