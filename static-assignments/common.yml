@@ -6,7 +6,7 @@
 
   tasks:
   - name: Install chrony package
-    yum:
+    service:
       name: chrony
       state: latest
   
