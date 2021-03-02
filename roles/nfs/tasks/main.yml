@@ -1,8 +1,9 @@
 ---
-- hosts: nfs
+
 
 - name: a task
-  shell: echo hello
+  hosts: nfs
+  become: yes
 
 # - name: running play for nfs servers
 #   hosts: nfs
