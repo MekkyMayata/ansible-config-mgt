@@ -205,7 +205,7 @@
   - name: configuring firewalld for nfs service
     ansible.posix.firewalld:
       zone: public
-      service: {{ item.service }}
+      service: "{{ item.service }}"
       permanent: yes
       state: enabled
     loop:
@@ -226,7 +226,7 @@
   - name: adding NFS port to firewall rule
     ansible.posix.firewalld:
       zone: public
-      port: {{ item.port }}
+      port: "{{ item.port }}"
       permanent: yes
       state: enabled
     loop:
