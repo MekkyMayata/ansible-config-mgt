@@ -14,11 +14,9 @@
       line: bind-address=0.0.0.0
     notify:
       - restart_mysql
-  
-  # handlers
-  handlers:
-    - name: restart_mysql
-      service:
-        name: mysql
-        state: restarted
+
+  - name: restart_mysql
+    service:
+      name: mysql
+      state: restarted
         

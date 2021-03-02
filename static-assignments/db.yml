@@ -1,6 +1,8 @@
 ---
 
-- hosts: db
+- name: play for db servers
   become: true
+  hosts: db
+  
   roles:
     - dbserver
