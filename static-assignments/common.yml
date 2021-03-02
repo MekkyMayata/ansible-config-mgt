@@ -1,12 +1,12 @@
 ---
 
-- name: play for RHEL hosts
+- name: play for all hosts
   hosts: all
   become: yes
 
   tasks:
   - name: Install chrony package
-    service:
+    ansible.builtin.package:
       name: chrony
       state: latest
   
