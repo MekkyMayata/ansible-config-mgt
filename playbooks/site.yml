@@ -11,9 +11,9 @@
 - name: loading play for NFS server(s)
   import_playbook: ../static-assignments/nfs.yml
 
-# # configure database server
-# - name: loading play for database server(s)
-#   import_playbook: ../static-assignments/db.yml
+# configure database server
+- name: loading play for database server(s)
+  import_playbook: ../static-assignments/db.yml
 
 # # configure webservers
 # - name: loading play for webserver(s)
