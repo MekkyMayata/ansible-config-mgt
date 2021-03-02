@@ -58,6 +58,7 @@
   # enable firewalld
   - name: enable firewalld
     service:
+      name: firewalld
       state: started
       enabled: true
 
