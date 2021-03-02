@@ -1,8 +1,11 @@
 ---
 
-- name: running play for nfs servers
-  hosts: nfs
-  become: yes
+- name: a task
+  shell: echo hello
+
+# - name: running play for nfs servers
+#   hosts: nfs
+#   become: yes
 
   # prompts for config
   # vars_prompt:
