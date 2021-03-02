@@ -140,6 +140,14 @@
       - { dir: '/mnt/logs', lv: '{{ lv3_name }}' }
     notify:
       - nfs_setup
+    
+    handlers:
+    # install nfs utils
+    - name: nfs_setup
+      service:
+        name: nfs-utils
+        state: started
+        enabled: yes
   
   # handle exports of NFS shares
   - name: mounting exports in /etc/exports file
@@ -203,14 +211,7 @@
     notify:
       - reload firewalld
 
-    handlers:
-  # install nfs utils
-    - name: nfs_setup
-      service:
-        name: nfs-utils
-        state: started
-        enabled: yes
-  
-  # reload firewalld
+    handlers:  
+    # reload firewalld
     - name: reload firewalld
       command: firewall-cmd --reload
