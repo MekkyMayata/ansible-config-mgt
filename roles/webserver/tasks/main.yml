@@ -38,8 +38,8 @@
       opts: "{{ item.options }}"
       state: mounted
     loop:
-      - { nfs: "{{ nfs_IP }}", dir: '/var/www', share: '/mnt/html', options: 'defaults,_netdev,context="system_u:object_r:httpd_sys_content_t:s0"' }
-      # - { nfs: {{ nfs_IP }}, dir: '/var/log/httpd', share: /mnt/logs', options: 'defaults,_netdev' }
+      - { nfs: "{{ nfs_IP }}", dir: '/var/www/html', share: '/mnt/html', options: 'defaults,_netdev,context="system_u:object_r:httpd_sys_content_t:s0"' }
+      - { nfs: {{ nfs_IP }}, dir: '/var/log/httpd', share: /mnt/logs', options: 'defaults,_netdev,context="system_u:object_r:httpd_log_t:s0"' }
 
   # update the motd file across all webservers
   - name: updating the motd file
@@ -61,7 +61,13 @@
 
   # create a virtual host directory 
   - name: creating apache virtual host directory
-    command: mkdir /etc/httpd/sites-available /etc/httpd/sites-enabled
+    ansible.builtin.file:
+      path: /etc/httpd/{{ item.path }}
+      state: directory
+      mode: 0755
+    loop:
+      - path: sites-available
+      - path: sites-enabled
 
   # setup importingg of virtual host files from external
   - name: updating base apache config to include virtual hosts in site-enabled directory
@@ -72,5 +78,10 @@
   
   # set up symbolic link for virtual host file
   - name: setiing symbolic link for server config file
-    command: ln -s /etc/httpd/sites-available/tooling.conf /etc/httpd/sites-enabled/tooling.conf
+    ansible.builtin.file:
+      src: /etc/httpd/sites-available/tooling.conf 
+      dest: /etc/httpd/sites-enabled/tooling.conf
+      owner: root
+      group: root
+      state:
   
