@@ -145,7 +145,7 @@
     yum:
       name: nfs-utils
       state: present
-      
+
   # start and enable nfs server
   - name: enable nfs server
     service:
@@ -173,7 +173,7 @@
   - name: Clone tooling repo
     ansible.builtin.git:
       repo: https://github.com/MekkyMayata/tooling.git
-      dest: /home/ec2-user/
+      dest: /home/ec2-user/tooling
   
   # fill /mnt/html share
   - name: move code to /mnt/html directory
