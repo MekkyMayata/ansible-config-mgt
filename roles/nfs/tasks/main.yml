@@ -161,10 +161,6 @@
       owner: root
       group: root
       mode: 0644
-    loop:
-      - path: /mnt/opt
-      - path: /mnt/html
-      - path: /mnt/logs
   
   - name: export nfs shares
     command: exportfs -a
