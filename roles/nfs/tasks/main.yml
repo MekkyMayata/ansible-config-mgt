@@ -142,7 +142,7 @@
 
   # install nfs utils
   - name: nfs_setup
-    service:
+    yum:
       name: nfs-utils
       state: started
       enabled: yes
