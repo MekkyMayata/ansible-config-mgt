@@ -4,6 +4,10 @@
     apt:
       name: mysql-server
       state: present
+  
+  - name: enable mysql-server
+    service:
+      name: mysql-server
       enabled: yes
 
   # setup bind-address config
