@@ -179,7 +179,7 @@
   - name: move code to /mnt/html directory
     command: cp -r /home/ec2-user/tooling/{{ item }} /mnt/html
     with_items:
-      - "html/*"
+      - "html/."
   
   # add neccessary firewall services for NFS share
   - name: configuring firewalld for nfs service
