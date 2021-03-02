@@ -203,7 +203,7 @@
     notify:
       - reload firewalld
 
-  handlers:
+- handlers:
   # install nfs utils
   - name: nfs_setup
     service:
