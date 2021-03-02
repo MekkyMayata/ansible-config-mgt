@@ -54,8 +54,12 @@
   - name: Installing firewalld
     yum:
       name: firewalld
+      state: present
+  # enable firewalld
+  - name: enable firewalld
+    service:
       state: started
-      enabled: yes
+      enabled: true
 
   # logical volume creation
   - name: create "{{ vg_name }}" volume group
