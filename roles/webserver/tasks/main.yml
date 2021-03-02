@@ -38,7 +38,7 @@
       opts: "{{ item.options }}"
       state: mounted
     loop:
-      - { nfs: {{ nfs_IP }}, dir: '/var/www', share: '/mnt/html', options: 'defaults,_netdev,context="system_u:object_r:httpd_sys_content_t:s0"' }
+      - { nfs: "{{ nfs_IP }}", dir: '/var/www', share: '/mnt/html', options: 'defaults,_netdev,context="system_u:object_r:httpd_sys_content_t:s0"' }
       # - { nfs: {{ nfs_IP }}, dir: '/var/log/httpd', share: /mnt/logs', options: 'defaults,_netdev' }
 
   # update the motd file across all webservers
