@@ -144,6 +144,12 @@
   - name: nfs_setup
     yum:
       name: nfs-utils
+      state: present
+      
+  # start and enable nfs server
+  - name: enable nfs server
+    service:
+      name: nfs-server
       state: started
       enabled: yes
 
