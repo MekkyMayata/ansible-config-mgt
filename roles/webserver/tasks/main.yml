@@ -3,7 +3,7 @@
   - name: install nfs client
     yum:
       name: nfs-utils
-      state: started
+      state: present
   
   - name: install showmount
     yum:
