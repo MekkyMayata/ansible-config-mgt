@@ -1,11 +1,4 @@
 ---
-# tasks file for nfs
-# Clone the Tooling website from GitHub.
-# Ensure the tooling website code is deployed to /var/www/html
-
-
-- name: running play for nfs servers
-  become: yes
 
   # prompts for config
   vars_prompt:
