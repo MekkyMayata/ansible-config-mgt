@@ -1,8 +1,8 @@
 ---
 
 - name: nfs server play
-  hosts: nfs
-  become: yes
+  # hosts: nfs
+  # become: yes
 
   tasks:
   - name: a task
