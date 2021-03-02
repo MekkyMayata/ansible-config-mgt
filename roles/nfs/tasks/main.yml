@@ -3,8 +3,8 @@
 # - name: a task
 #   shell: echo hello
 - name: running play for nfs servers
-  hosts: nfs
-  become: yes
+  # hosts: nfs
+  # become: yes
 
   tasks:
   # partition creation
