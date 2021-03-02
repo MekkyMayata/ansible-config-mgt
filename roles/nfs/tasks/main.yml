@@ -205,10 +205,7 @@
     loop:
       - port: 2049/tcp
       - port: 2049/udp
-    notify:
-      - reload firewalld
 
-    handlers:  
-    # reload firewalld
-    - name: reload firewalld
-      command: firewall-cmd --reload
+  # reload firewalld
+  - name: reload firewalld
+    command: firewall-cmd --reload
