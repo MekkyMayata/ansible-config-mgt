@@ -1,8 +1,8 @@
 ---
 
-- name: running play for nfs servers
-  hosts: nfs
-  become: yes
+# - name: running play for nfs servers
+#   hosts: nfs
+#   become: yes
 
   # prompts for config
   vars_prompt:
