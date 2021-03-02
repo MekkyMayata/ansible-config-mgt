@@ -203,7 +203,6 @@
     notify:
       - reload firewalld
 
-  - name: handlers
     handlers:
   # install nfs utils
     - name: nfs_setup
@@ -211,6 +210,7 @@
         name: nfs-utils
         state: started
         enabled: yes
+  
   # reload firewalld
     - name: reload firewalld
       command: firewall-cmd --reload
