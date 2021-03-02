@@ -1,5 +1,12 @@
 ---
 
+- name: nfs server play
+  hosts: nfs
+  become: yes
+
+  tasks:
+  - name: a task
+    shell: echo hello
 # - name: running play for nfs servers
 #   hosts: nfs
 #   become: yes
@@ -30,15 +37,15 @@
   #     prompt: "Enter the type of filesystem to format logical volumes with"
   #     private: no
 
-- name: testing
-  tasks:
-  # partition creation
-  - name: "create partitions on devices"
-    block:
-      - name: Install parted
-        package:
-          name: parted
-          state: present
+
+  # tasks:
+  # # partition creation
+  # - name: "create partitions on devices"
+  #   block:
+  #     - name: Install parted
+  #       package:
+  #         name: parted
+  #         state: present
       
   #     - name: add new partition on /dev/xvdb
   #       parted:
