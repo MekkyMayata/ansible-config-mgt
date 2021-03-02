@@ -1,6 +1,7 @@
 ---
 
 - name: play for RHEL hosts
+  hosts: all
   become: yes
 
   tasks:
