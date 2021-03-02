@@ -85,6 +85,13 @@
     yum:
       name: git
       state: present
+  
+  # install firewalld
+  - name: Installing firewalld
+    yum:
+      name: firewalld
+      state: started
+      enabled: yes
 
   # logical volume creation
   - name: create "{{ vg_name }}" volume group
@@ -165,24 +172,77 @@
       - { dir: '/mnt/logs', lv: '{{ lv3_name }}' }
     notify:
       - nfs_setup
-    
+  
+  # handle exports of NFS shares
+  - name: mounting exports in /etc/exports file
+    ansible.builtin.template:
+      src: exports-config.j2
+      dest: /etc/exports
+      owner: root
+      group: root
+      mode: 0644
+    loop:
+      - path: /mnt/opt
+      - path: /mnt/html
+      - path: /mnt/logs
+  
+  - name: export nfs shares
+    command: exportfs -a
+
+  # clone repo
+  - name: Clone tooling repo
+    ansible.builtin.git:
+      repo: https://github.com/MekkyMayata/tooling.git
+      dest: /home/ec2-user/
+  
+  # fill /mnt/html share
+  - name: move code to /mnt/html directory
+    command: cp -r /home/ec2-user/tooling/{{ item }} /mnt/html
+    with_items:
+      - "html/*"
+  
+  # add neccessary firewall services for NFS share
+  - name: configuring firewalld for nfs service
+    ansible.posix.firewalld:
+      zone: public
+      service: {{ item.service }}
+      permanent: yes
+      state: enabled
+    loop:
+      - service: nfs
+      - service: mountd
+      - service: rpc-bind
+  
+  # add IP address source
+  # source should be automated though
+  - name: adding IP source to firewall rules
+    ansible.posix.firewalld:
+      zone: public
+      source: 172.31.0.0/16
+      permanent: yes
+      state: enabled
+  
+  # add NFS port to firewall rules
+  - name: adding NFS port to firewall rule
+    ansible.posix.firewalld:
+      zone: public
+      port: {{ item.port }}
+      permanent: yes
+      state: enabled
+    loop:
+      - port: 2049/tcp
+      - port: 2049/udp
+    notify:
+      - reload firewalld
+
   handlers:
+  # install nfs utils
   - name: nfs_setup
     service:
       name: nfs-utils
       state: started
       enabled: yes
-
-  - name: Clone tooling repo
-    ansible.builtin.git:
-      repo: https://github.com/MekkyMayata/tooling.git
-      dest: /home/ec2-user/
-
-  - name: move code to /mnt/html directory
-    command: cp -r /home/{{ user }}/tooling/{{ item }} /mnt/html
-    with_items:
-      - "html/*"
-    
-
   
-  
+  # reload firewalld
+  - name: reload firewalld
+    command: firewall-cmd --reload
