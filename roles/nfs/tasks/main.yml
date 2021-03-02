@@ -127,7 +127,7 @@
       - /mnt/logs
   
   # mount the filesystems by label (UUID will be splendid though!)
-  - name: mounting the {{ fs }} filesystem
+  - name: mounting the "{{ fs }}" filesystem
     mount:
       path: "{{ item.dir }}"
       src: "/dev/{{ vg_name }}/{{ item.lv }}"
