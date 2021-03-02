@@ -7,6 +7,7 @@
 #   become: yes
 
   # prompts for config
+- name: task 2
   vars_prompt:
     - name: "vg_name"
       prompt: "Enter the name of the volume group here"
