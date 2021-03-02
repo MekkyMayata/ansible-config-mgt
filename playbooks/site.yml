@@ -5,7 +5,6 @@
 
 # general config
 - name: importing common playbook
-  hosts: nfs
   import_playbook: ../static-assignments/common.yml
 
 # configure nfs server
