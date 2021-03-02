@@ -30,7 +30,7 @@
   #     prompt: "Enter the type of filesystem to format logical volumes with"
   #     private: no
 
-
+- name: testing
   tasks:
   # partition creation
   - name: "create partitions on devices"
