@@ -1,4 +1,5 @@
 ---
+# tasks for nfs
 
   # partition creation
   - name: "create partitions on devices"
