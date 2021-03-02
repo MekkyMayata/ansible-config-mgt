@@ -2,11 +2,11 @@
 
 # - name: a task
 #   shell: echo hello
-- name: running play for nfs servers
+# - name: running play for nfs servers
   # hosts: nfs
   # become: yes
 
-  tasks:
+  # tasks:
   # partition creation
   - name: "create partitions on devices"
     block:
@@ -15,89 +15,89 @@
           name: parted
           state: present
       
-  #     - name: add new partition on /dev/xvdb
-  #       parted:
-  #         device: "/dev/xvdb"
-  #         number: "1"
-  #         part_type: primary
-  #         flags: [ lvm ]
-  #         state: present
-  #         part_start: "0%"
-  #         part_end: "100%"
+      - name: add new partition on /dev/xvdb
+        parted:
+          device: "/dev/xvdb"
+          number: "1"
+          part_type: primary
+          flags: [ lvm ]
+          state: present
+          part_start: "0%"
+          part_end: "100%"
 
-  #     - name: add new partition on /dev/xvdc
-  #       parted:
-  #         device: "/dev/xvdc"
-  #         number: "1"
-  #         part_type: primary
-  #         flags: [ lvm ]
-  #         state: present
-  #         part_start: "0%"
-  #         part_end: "100%"
+      - name: add new partition on /dev/xvdc
+        parted:
+          device: "/dev/xvdc"
+          number: "1"
+          part_type: primary
+          flags: [ lvm ]
+          state: present
+          part_start: "0%"
+          part_end: "100%"
 
-  #     - name: add new partition on /dev/xvdd
-  #       parted:
-  #         device: "/dev/xvdd"
-  #         number: "1"
-  #         part_type: primary
-  #         flags: [ lvm ]
-  #         state: present
-  #         part_start: "0%"
-  #         part_end: "100%"
+      - name: add new partition on /dev/xvdd
+        parted:
+          device: "/dev/xvdd"
+          number: "1"
+          part_type: primary
+          flags: [ lvm ]
+          state: present
+          part_start: "0%"
+          part_end: "100%"
 
-  # # install lvm
-  # - name: Install lvm
-  #   yum:
-  #     name: lvm2
-  #     state: present
+  # install lvm
+  - name: Install lvm
+    yum:
+      name: lvm2
+      state: present
   
-  # # install git
-  # - name: Install git
-  #   yum:
-  #     name: git
-  #     state: present
+  # install git
+  - name: Install git
+    yum:
+      name: git
+      state: present
   
-  # # install firewalld
-  # - name: Installing firewalld
-  #   yum:
-  #     name: firewalld
-  #     state: started
-  #     enabled: yes
+  # install firewalld
+  - name: Installing firewalld
+    yum:
+      name: firewalld
+      state: started
+      enabled: yes
 
-  # # logical volume creation
-  # - name: create "{{ vg_name }}" volume group
-  #   lvg:
-  #     vg: "{{ vg_name }}"
-  #     pvs: "/dev/xvdb1,/dev/xvdc1,/dev/xvdd1"
-  #     force: no
-  #     state: present
+  # logical volume creation
+  - name: create "{{ vg_name }}" volume group
+    lvg:
+      vg: "{{ vg_name }}"
+      pvs: "/dev/xvdb1,/dev/xvdc1,/dev/xvdd1"
+      force: no
+      state: present
 
-  # - name: create the "{{ lv1_name }}" logical volume
-  #   lvol:
-  #     vg: "{{ vg_name }}"
-  #     lv: "{{ lv1_name }}"
-  #     size: "{{ lv_size }}"
-  #     active: yes
-  #     force: no
-  #     state: present
+  - name: create the "{{ lv1_name }}" logical volume
+    lvol:
+      vg: "{{ vg_name }}"
+      lv: "{{ lv1_name }}"
+      size: "{{ lv_size }}"
+      active: yes
+      force: no
+      state: present
 
-  # - name: create the "{{ lv2_name }}" logical volume
-  #   lvol:
-  #     vg: "{{ vg_name }}"
-  #     lv: "{{ lv2_name }}"
-  #     size: "{{ lv_size }}"
-  #     active: yes
-  #     force: no
-  #     state: present
+  - name: create the "{{ lv2_name }}" logical volume
+    lvol:
+      vg: "{{ vg_name }}"
+      lv: "{{ lv2_name }}"
+      size: "{{ lv_size }}"
+      active: yes
+      force: no
+      state: present
 
-  # - name: create the "{{ lv3_name }}" logical volume
-  #   lvol:
-  #     vg: "{{ vg_name }}"
-  #     lv: "{{ lv3_name }}"
-  #     size: "{{ lv_size }}"
-  #     active: yes
-  #     force: no
-  #     state: present
+  - name: create the "{{ lv3_name }}" logical volume
+    lvol:
+      vg: "{{ vg_name }}"
+      lv: "{{ lv3_name }}"
+      size: "{{ lv_size }}"
+      active: yes
+      force: no
+      state: present
 
   # # formatting the lvs with choosen filesystem
   # - name: Setting up a/an "{{ fs }}" filesystem on lvm "/dev/{{ vg_name }}/{{ lv1_name }}"
