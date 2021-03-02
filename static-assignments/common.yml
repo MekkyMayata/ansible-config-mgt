@@ -8,5 +8,10 @@
   - name: Install chrony package
     yum:
       name: chrony
+      state: latest
+  
+  - name: Enable chronyd daemon
+    service:
+      name: chronyd
       state: started
       enabled: true
