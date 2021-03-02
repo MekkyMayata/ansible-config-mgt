@@ -1,7 +1,5 @@
 ---
 
-- hosts: nfs
-
 - name: a task
   shell: echo hello
 # - name: running play for nfs servers
