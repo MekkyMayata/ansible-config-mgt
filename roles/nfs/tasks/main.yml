@@ -1,43 +1,19 @@
 ---
 
-- name: a task
-  shell: echo hello
-# - name: running play for nfs servers
-#   hosts: nfs
-#   become: yes
+# - name: a task
+#   shell: echo hello
+- name: running play for nfs servers
+  hosts: nfs
+  become: yes
 
-  # prompts for config
-
-    
-  #   - name: "lv1_name"
-  #     prompt: "Enter the name of the first logical volume here"
-  #     private: no
-    
-  #   - name: "lv2_name"
-  #     prompt: "Enter the name of the second logical volume here"
-  #     private: no
-
-  #   - name: "lv3_name"
-  #     prompt: "Enter the name of the third logical volume here"
-  #     private: no
-
-  #   - name: "lv_size"
-  #     prompt: "Enter the size of the logical volume here"
-  #     private: no
-    
-  #   - name: "fs"
-  #     prompt: "Enter the type of filesystem to format logical volumes with"
-  #     private: no
-
-
-  # tasks:
-  # # partition creation
-  # - name: "create partitions on devices"
-  #   block:
-  #     - name: Install parted
-  #       package:
-  #         name: parted
-  #         state: present
+  tasks:
+  # partition creation
+  - name: "create partitions on devices"
+    block:
+      - name: Install parted
+        package:
+          name: parted
+          state: present
       
   #     - name: add new partition on /dev/xvdb
   #       parted:
