@@ -141,6 +141,7 @@
     notify:
       - nfs_setup
 
+  - name: handler
     handlers:
     # install nfs utils
     - name: nfs_setup
