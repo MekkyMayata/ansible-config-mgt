@@ -1,20 +1,24 @@
 ---
 
-- name: General infrastructure configuration
+- name: Include dynamic variables
   hosts: all
-
-# general config
-- name: importing common playbook
-  import_playbook: ../static-assignments/common.yml
+  tasks:
+    - import_playbook: ../static-assignments/common.yml
+    - include_playbook: ../dynamic-assignments/env-vars.yml
+  tags:
+    - always
 
 # configure nfs server
 - name: loading play for NFS server(s)
+  hosts: nfs
   import_playbook: ../static-assignments/nfs.yml
 
 # configure database server
 - name: loading play for database server(s)
+  hosts: db
   import_playbook: ../static-assignments/db.yml
 
 # configure webservers
-- name: loading play for webserver(s)
+- name: Webserver assignment
+  hosts: webservers
   import_playbook: ../static-assignments/webservers.yml
