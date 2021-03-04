@@ -15,6 +15,7 @@
   tasks:
     - debug: var=inventory_hostname
     - debug: var=inventory_file
+    - debug: var=playbook_dir
     # - include_vars: "{{ lookup('first_found', params, errors='ignore') }}"
     #   vars:
     #     params:
