@@ -9,6 +9,7 @@
     - always
       
 - name: include the env-vars playbook
+  hosts: all
   ansible.builtin.include: ../dynamic-assignments/env-vars.yml
   tags:
     - always
