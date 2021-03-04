@@ -18,7 +18,6 @@
 
 # configure database server
 - name: loading play for database server(s)
-  hosts: db
   import_playbook: ../static-assignments/db.yml
 
 # configure webservers
