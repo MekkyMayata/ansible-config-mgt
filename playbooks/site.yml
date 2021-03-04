@@ -1,7 +1,7 @@
 ---
 
-- name: Include dynamic variables
-  hosts: all
+# - name: Include dynamic variables
+#   hosts: all
 
 - name: import the common playbook
   import_playbook: ../static-assignments/common.yml
@@ -9,7 +9,6 @@
     - always
       
 - name: include the env-vars playbook
-  hosts: all
   ansible.builtin.include: ../dynamic-assignments/env-vars.yml
   tags:
     - always
