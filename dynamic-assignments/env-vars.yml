@@ -1,20 +1,20 @@
 ---
-# - name: collate variables from env specific file, if it exists
-#   hosts: all
-#   tasks:
-#     - include_vars: "{{ item, skip=true }}"
-#       with_first_found:
-#         - "{{ playbook_dir }}/../env_vars/{{ inventory_file }}.yml"
-#         - "{{ playbook_dir }}/../env_vars/default.yml"
-#       tags:
-#         - always
-
-- name: collate variables from env specific file if it exists
+- name: collate variables from env specific file, if it exists
   hosts: all
   tasks:
-    - include_vars: "{{ lookup('first_found', params, errors='ignore') }}"
-      vars:
-        params:
-          files:
-            - "{{ playbook_dir }}/../env_vars/{{ inventory_file }}.yml"
-            - "{{ playbook_dir }}/../env_vars/default.yml"
+    - include_vars: "{{ item }}"
+      with_first_found:
+        - "{{ playbook_dir }}/../env_vars/{{ inventory_file }}.yml"
+        - "{{ playbook_dir }}/../env_vars/default.yml"
+      tags:
+        - always
+
+# - name: collate variables from env specific file if it exists
+#   hosts: all
+#   tasks:
+#     - include_vars: "{{ lookup('first_found', params, errors='ignore') }}"
+#       vars:
+#         params:
+#           files:
+#             - "{{ playbook_dir }}/../env_vars/{{ inventory_file }}.yml"
+#             - "{{ playbook_dir }}/../env_vars/default.yml"
