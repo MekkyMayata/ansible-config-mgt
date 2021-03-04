@@ -3,7 +3,7 @@
 # or sudo access
 mysql_user_home: /home/ec2-user
 mysql_user_name: ec2-user
-mysql_user_password: root
+mysql_user_password: rootpassnwa
 
 # The default root user installed by mysql - almost always root
 mysql_root_home: /root
@@ -113,11 +113,12 @@ mysql_databases: []
     replicate: 1
 
 # Users.
+# Create database user with password and all database privileges and 'WITH GRANT OPTION'
 mysql_users: []
   - name: webaccess
-    host: 172.31.%.%
+    host: '172.31.%.%'
     password: password
-    priv: *.*:USAGE
+    priv: '*.*:ALL,GRANT'
 
 # Replication settings (replication is only enabled if master/user have values).
 mysql_server_id: "1"
