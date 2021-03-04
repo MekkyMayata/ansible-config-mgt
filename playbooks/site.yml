@@ -5,11 +5,13 @@
 
 - name: import the common playbook
   import_playbook: ../static-assignments/common.yml
+  tags:
+    - always
       
-    # - name: include the env-vars playbook
-    #   include_playbook: ../dynamic-assignments/env-vars.yml
-  # tags:
-  #   - always
+- name: include the env-vars playbook
+  include_playbook: ../dynamic-assignments/env-vars.yml
+  tags:
+    - always
 
 # configure nfs server
 # - name: loading play for NFS server(s)
