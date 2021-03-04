@@ -1,15 +1,26 @@
 ---
 
-# - name: Include dynamic variables
-#   hosts: all
+- name: Include dynamic variables
+  hosts: all
 
 - name: import the common playbook
   import_playbook: ../static-assignments/common.yml
   tags:
     - always
-      
+
+#[DEPRECATION WARNING]: 'include' for playbook includes. 
+# You should use 'import_playbook' instead. 
+# This feature will be removed in version 2.12. 
+# Deprecation warnings can be 
+# disabled by setting deprecation_warnings=False in ansible.cfg.
+
+# - name: include the env-vars playbook
+#   ansible.builtin.include: ../dynamic-assignments/env-vars.yml
+#   tags:
+#     - always
+
 - name: include the env-vars playbook
-  ansible.builtin.include: ../dynamic-assignments/env-vars.yml
+  import_playbook: ../dynamic-assignments/env-vars.yml
   tags:
     - always
 
