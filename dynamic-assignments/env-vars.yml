@@ -6,7 +6,6 @@
       with_first_found:
         # - "{{ playbook_dir }}/../env_vars/*.yml"
         - "{{ playbook_dir }}/../env_vars/default.yml"
-        skip: true
       tags:
         - always
 
