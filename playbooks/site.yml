@@ -26,7 +26,6 @@
 
 # configure nfs server
 # - name: loading play for NFS server(s)
-#   hosts: nfs
 #   import_playbook: ../static-assignments/nfs.yml
 
 # configure database server
@@ -35,5 +34,4 @@
 
 # configure webservers
 # - name: Webserver assignment
-#   hosts: webservers
 #   import_playbook: ../static-assignments/webservers.yml
