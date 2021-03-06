@@ -10,7 +10,7 @@ host4 ansible_host=172.31.0.13
 host5 ansible_host=172.31.0.14
 
 [jenkins]
-host7 ansible_host=172.31.0.15
+host6 ansible_host=172.31.0.15
 
 [lb]
 host7 ansible_host=172.31.0.16
