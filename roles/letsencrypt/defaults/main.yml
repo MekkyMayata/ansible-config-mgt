@@ -1,9 +1,2 @@
 ---
 # defaults file for letsencrypt
-certbot_site_names: {
-    host1: "devopsninja.me",
- }
- 
-certbot_package: "python3-certbot-apache"
-certbot_plugin: "apache"
-certbot_mail_address: okpallannaemeka@gmail.com
