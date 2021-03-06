@@ -1,7 +1,7 @@
 ---
 # vars file for letsencrypt on RedHat server
 certbot_site_names: {
-    host1: "devopsninja.me",
+    host7: "devopsninja.me",
  }
  
 certbot_package: "python3-certbot-apache"
