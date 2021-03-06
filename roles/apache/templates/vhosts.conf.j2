@@ -9,6 +9,15 @@
 {% endif %}
 {% if vhost.documentroot is defined %}
   DocumentRoot "{{ vhost.documentroot }}"
+  <proxy balancer://{{ appset }}>
+        BalancerMember http://{{ lb_target1 }}
+        BalancerMember http://{{ lb_target2 }}
+        BalancerMember http://{{ lb_target3 }}
+        ProxySet lbmethod=bytraffic
+  </proxy>
+
+ProxyPass "/" "balancer://{{ lb_name }}/"
+ProxyPassReverse "/" "balancer://{{ lb_name }}/"
 {% endif %}
 
 {% if vhost.serveradmin is defined %}
@@ -76,16 +85,6 @@
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
 {% endif %}
-
-<proxy balancer://{{ appset }}>
-        BalancerMember http://{{ lb_target1 }}
-        BalancerMember http://{{ lb_target2 }}
-        BalancerMember http://{{ lb_target3 }}
-        ProxySet lbmethod=bytraffic
-</proxy>
-
-ProxyPass "/" "balancer://{{ lb_name }}/"
-ProxyPassReverse "/" "balancer://{{ lb_name }}/"
 
 </VirtualHost>
 
