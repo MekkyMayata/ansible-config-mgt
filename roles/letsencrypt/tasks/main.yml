@@ -3,12 +3,12 @@
 - name: play for letsencrypt 
   include_vars: "{{ ansible_os_family }}.yml"
    
-  # tasks:
-  # - name : Install Python Package
-  #   yum: 
-  #     name: python3 
-  #     update_cache: yes 
-  #     state: latest
+  tasks:
+  - name : Install Python Package
+    yum: 
+      name: python3 
+      update_cache: yes 
+      state: latest
  
   # - name : Install Let's Encrypt Package
   #   yum: 
