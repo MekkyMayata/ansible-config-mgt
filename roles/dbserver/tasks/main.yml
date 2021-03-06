@@ -1,0 +1,25 @@
+---
+  # install mysql
+  - name: "install mysql-server"
+    apt:
+      name: mysql-server
+      state: present
+  
+  - name: enable mysql-server
+    service:
+      name: mysql
+      state: started
+      enabled: yes
+
+  # setup bind-address config
+  - name: update bind address
+    ansible.builtin.lineinfile:
+      path: /etc/mysql/mysql.conf.d/mysqld.cnf
+      regexp: '^bind-address'
+      line: bind-address=0.0.0.0
+      
+  - name: restart_mysql
+    service:
+      name: mysql
+      state: restarted
+        
