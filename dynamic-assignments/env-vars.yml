@@ -6,7 +6,7 @@
       include_vars: "{{ item }}"
       with_first_found:
         - files:
-            - prod.yml
+            - dev.yml
             - stage.yml
             - prod.yml
             - stage.yml
