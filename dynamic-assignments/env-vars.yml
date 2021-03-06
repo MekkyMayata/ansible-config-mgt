@@ -22,5 +22,7 @@
       vars:
         params:
           files:
-            - "{{ playbook_dir }}/../env_vars/dev.yml"
-            - "{{ playbook_dir }}/../env_vars/default.yml"
+            - "dev.yml"
+            - "default.yml"
+          paths:
+            - 'env-vars'
