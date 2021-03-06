@@ -19,7 +19,7 @@
     # - debug: var=inventory_file
     # - debug: var=playbook_dir
   - include_vars:
-      dir: "{{ playbook_dir }}../env-vars"
+      dir: "{{ playbook_dir }}/../env-vars"
       extensions:
         - 'yml'
 #       # vars:
