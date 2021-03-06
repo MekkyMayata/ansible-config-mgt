@@ -30,7 +30,6 @@
 #       #     paths:
 #       #       - 'env-vars'
 - name: Include all .json and .jsn files in vars/all and all nested directories (2.3)
-  hosts: all
   include_vars:
     dir: vars/all
     extensions:
