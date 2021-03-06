@@ -19,7 +19,7 @@
     - debug: var=inventory_file
     - debug: var=playbook_dir
     - include_vars: "{{ lookup('first_found', params) }}"
-        dir: "{{ playbook_dir }}/../env_vars/"
+        dir: "env_vars"
         extensions:
           - 'yml'
       # vars:
