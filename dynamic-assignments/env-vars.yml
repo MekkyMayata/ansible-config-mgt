@@ -7,11 +7,12 @@
         - files:
             - dev.yml
             - uat.yml
+            - prod.yml
             - default.yml
           paths:
             - "{{ playbook_dir }}/../env-vars"
-    # - tags:
-    #     - always
+      tags:
+        - always
 
 # absolute path is returned for each of the special variables below
 # hence error when running above task
