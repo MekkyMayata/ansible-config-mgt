@@ -4,7 +4,7 @@ jenkins2_user: jenkins
 jenkins2_package_version: jenkins
 # Choose release line between stable and latest
 jenkins2_release_line: stable
-jenkins2_jenkins2_disable_gpg_check: false
+jenkins2_jenkins2_disable_gpg_check: true
 jenkins2_key_validate_certs: true
 jenkins2_context_path: ''
 jenkins2_cli_username: admin
