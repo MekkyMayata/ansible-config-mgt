@@ -62,6 +62,6 @@ enable_apache_lb: false
 load_balancer_is_required: false
 
 lb_name: "appset"
-lb_target1: webservers[0]
-lb_target2: webservers[1]
-lb_target3: webservers[2]
+lb_target1: "172.31.0.11"
+lb_target2: "172.31.0.12"
+lb_target3: "172.31.0.13"
