@@ -13,7 +13,7 @@
  
   - name : Install Let's Encrypt Package
     yum: 
-      name: {{ certbot_package }}
+      name: "{{ certbot_package }}"
       update_cache: yes 
       state: latest
  
