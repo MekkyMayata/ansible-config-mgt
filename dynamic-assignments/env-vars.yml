@@ -18,9 +18,14 @@
     - debug: var=inventory_hostname
     - debug: var=inventory_file
     - debug: var=playbook_dir
-    # - include_vars: "{{ lookup('first_found', params, errors='ignore') }}"
-    #   vars:
-    #     params:
-    #       files:
-    #         - "{{ playbook_dir }}/../env_vars/{{ inventory_file }}.yml"
-    #         - "{{ playbook_dir }}/../env_vars/default.yml"
+    - include_vars: "{{ lookup('first_found', params, errors='ignore') }}"
+      vars:
+        params:
+          files:
+            - "{{ playbook_dir }}/../env_vars/{{ item }}.yml"
+            - "{{ playbook_dir }}/../env_vars/default.yml"
+  loop:
+    - dev
+    - prod
+    - stage
+    - uat
