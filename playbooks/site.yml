@@ -40,5 +40,8 @@
   import_playbook: ../static-assignments/loadbalancers.yml
   when: load_balancer_is_required
 
-- name: Loadbalancers assignment
+- name: Letsencrypt assignment
   import_playbook: ../static-assignments/letsencrypt.yml
+
+- name: jenkins assignment
+  import_playbook: ../static-assignments/jenkins.yml
