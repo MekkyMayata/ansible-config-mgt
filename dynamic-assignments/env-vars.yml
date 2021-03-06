@@ -3,15 +3,15 @@
   hosts: all
   tasks:
     - include_vars: "{{ item }}"
-  # with_first_found:
-  #   - files:
-  #       - dev.yml
-  #       - uat.yml
-  #       - default.yml
-  #     paths:
-  #       - "{{ playbook_dir }}/../env-vars"
-    - tags:
-        - always
+      with_first_found:
+        - files:
+            - dev.yml
+            - uat.yml
+            - default.yml
+          paths:
+            - "{{ playbook_dir }}/../env-vars"
+    # - tags:
+    #     - always
 
 # absolute path is returned for each of the special variables below
 # hence error when running above task
