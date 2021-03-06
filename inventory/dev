@@ -1,16 +1,16 @@
 [nfs]
-172.31.0.10
+host1 ansible_host=172.31.0.10
 
 [webservers]
-172.31.0.11
-172.31.0.12
-172.31.0.13
+host2 ansible_host=172.31.0.11
+host3 ansible_host=172.31.0.12
+host4 ansible_host=172.31.0.13
 
 [db]
-172.31.0.14
+host5 ansible_host=172.31.0.14
 
 [jenkins]
-172.31.0.15
+host7 ansible_host=172.31.0.15
 
 [lb]
 host7 ansible_host=172.31.0.16
