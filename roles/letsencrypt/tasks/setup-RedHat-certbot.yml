@@ -1,12 +1,7 @@
 ---
-- name: Ensure EPEL repo is added
-  package:
-    name: "{{ apache_packages }}"
-    state: "{{ apache_packages_state }}"
-    enablerepo: "{{ apache_enablerepo | default(omit, true) }}"
 
 # too static !
-- name: Install the nginx rpm from a remote repo
+- name: ensure epel repo is present
   dnf:
     name: 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm'
     state: present
@@ -35,6 +30,8 @@
     group: root
     state: link
     
+# is community.general.snap installed?
+# ansible-galaxy collection install community.general
 - name: Install core
   community.general.snap:
     name:
