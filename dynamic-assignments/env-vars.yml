@@ -22,10 +22,5 @@
       vars:
         params:
           files:
-            - "{{ playbook_dir }}/../env_vars/{{ item }}.yml"
+            - "{{ playbook_dir }}/../env_vars/dev.yml"
             - "{{ playbook_dir }}/../env_vars/default.yml"
-  loop:
-    - dev
-    - prod
-    - stage
-    - uat
