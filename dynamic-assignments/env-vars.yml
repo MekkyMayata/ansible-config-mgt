@@ -14,14 +14,14 @@
 
 - name: collate variables from env specific file if it exists
   hosts: all
-  tasks:
-    - debug: var=inventory_hostname
-    - debug: var=inventory_file
-    - debug: var=playbook_dir
-    - include_vars: "{{ lookup('first_found', params) }}"
-        dir: "{{ playbook_dir }}"
-        extensions:
-          - 'yml'
+  # tasks:
+  #   - debug: var=inventory_hostname
+  #   - debug: var=inventory_file
+  #   - debug: var=playbook_dir
+  include_vars: "{{ lookup('first_found', params) }}"
+    dir: "{{ playbook_dir }}"
+    extensions:
+      - 'yml'
       # vars:
       #   params:
       #     files:
