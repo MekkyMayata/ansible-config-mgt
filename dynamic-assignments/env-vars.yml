@@ -1,40 +1,28 @@
 ---
-# - name: collate variables from env specific file, if it exists
-#   hosts: all
-#   tasks:
-#     - include_vars: "{{ item }}"
-#       with_first_found:
-#         - "{{ playbook_dir }}/../env_vars/{{ inventory_file }}.yml"
-#         - "{{ playbook_dir }}/../env_vars/default.yml"
-#       tags:
-#         - always
+- name: collate variables from env specific file, if it exists
+  hosts: all
+  tasks:
+  - include_vars: "{{ item }}"
+  - with_first_found:
+      - files:
+          - dev.yml
+          - uat.yml
+          - default.yml
+        paths:
+          - "{{ playbook_dir }}/../env-vars"
+    # tags:
+    #   - always
 
 # absolute path is returned for each of the special variables below
 # hence error when running above task
 
-- name: collate variables from env specific file if it exists
-  hosts: all
-  tasks:
-  - debug: var=inventory_hostname
-  - debug: var=inventory_file
-  - debug: var=playbook_dir
-  - include_vars:
-      dir: "{{ playbook_dir }}/../env-vars"
-      extensions:
-        - 'yml'
-#       # vars:
-#       #   params:
-#       #     files:
-#       #       - "dev.yml"
-#       #       - "default.yml"
-#       #     paths:
-#       #       - 'env-vars'
-
-# - name: Include all .json and .jsn files in vars/all and all nested directories (2.3)
+# - name: collate variables from env specific file if it exists
 #   hosts: all
 #   tasks:
+#   - debug: var=inventory_hostname
+#   - debug: var=inventory_file
+#   - debug: var=playbook_dir
 #   - include_vars:
-#       dir: vars/all
+#       dir: "{{ playbook_dir }}/../env-vars"
 #       extensions:
-#         - 'json'
-#         - 'jsn'
+#         - 'yml'
