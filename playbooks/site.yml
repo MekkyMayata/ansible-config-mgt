@@ -32,7 +32,7 @@
 # - name: loading play for database server(s)
 #   import_playbook: ../static-assignments/db.yml
 
-configure webservers
+# configure webservers
 - name: Webserver assignment
   import_playbook: ../static-assignments/webservers.yml
 
