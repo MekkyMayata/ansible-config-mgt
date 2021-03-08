@@ -24,7 +24,7 @@
 # static setup, change to dynamic
 - name: add vars
   include_vars:
-    dirs: "../../defaults/main/"
+    dir: "../../defaults/main/"
 
 - name: add mappings to /etc/hosts
   blockinfile:
