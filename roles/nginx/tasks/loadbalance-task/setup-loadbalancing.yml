@@ -22,10 +22,6 @@
   meta: flush_handlers
 
 # static setup, change to dynamic
-- name: add vars
-  include_vars:
-    dir: "../../defaults/main/"
-
 - name: add mappings to /etc/hosts
   blockinfile:
     path: /etc/hosts
