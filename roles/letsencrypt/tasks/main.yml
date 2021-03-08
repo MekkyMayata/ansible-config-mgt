@@ -12,14 +12,8 @@
 # Setup/install tasks.
 - include_tasks: "setup-{{ ansible_os_family }}-certbot.yml"
  
-# - name : Install Let's Encrypt Package
-#   yum: 
-#     name: "{{ certbot_package }}"
-#     update_cache: yes 
-#     state: latest
- 
 - name: Create and Install Cert Using {{ certbot_plugin }} Plugin
-  command: "certbot --{{ certbot_plugin }} -d  {{ certbot_site_names[inventory_hostname_short] }} -m {{ certbot_mail_address }} --agree-tos --noninteractive --redirect"
+  command: "certbot --{{ certbot_plugin|nginx }} -d  {{ certbot_site_names[inventory_hostname_short] }} -m {{ certbot_mail_address }} --agree-tos --noninteractive --redirect"
  
    
 - name: Set Letsencrypt Cronjob for Certificate Auto Renewal
