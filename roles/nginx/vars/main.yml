@@ -81,3 +81,14 @@ nginx_plus_modules_list: [
   'auth-spnego', 'brotli', 'cookie-flag', 'encrypted-session', 'geoip', 'geoip2', 'headers-more', 'image-filter', 'lua',
   'modsecurity', 'njs', 'opentracing', 'passenger', 'perl', 'prometheus', 'rtmp', 'subs-filter', 'xslt',
 ]
+
+#*****************vars for loadbalancing status***************
+enable_nginx_lb: false
+load_balancer_is_required: false
+
+lb_name: "backend"
+lb_target: ["172.31.32.11", "172.31.32.12",  "172.31.32.13"]
+
+host_1: web1
+host_2: web2
+host_3: web3
