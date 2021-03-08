@@ -110,3 +110,6 @@ nginx_modules: []
 #*****************vars for loadbalancing status***************
 enable_nginx_lb: false
 load_balancer_is_required: false
+
+lb_name: "backend"
+lb_target: ["172.31.32.11", "172.31.32.12",  "172.31.32.13"]

@@ -86,3 +86,8 @@
     - nginx_amplify_api_key is defined
     - nginx_amplify_api_key | length > 0
   tags: nginx_install_amplify
+
+- name: Configure Nginx Loadbalancing
+  include_tasks: "{{ role_path }}/tasks/loadbalance-task/setup-loadbalancing.yml"
+  when:
+    - enable_nginx_lb and load_balancer_is_required

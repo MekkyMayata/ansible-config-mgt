@@ -37,3 +37,8 @@
 
 - name: (Handler) Run logrotate
   command: logrotate -f /etc/logrotate.d/nginx
+
+- name: (Handler) Restart Nginx
+  ansible.builtin.systemd:
+    name: nginx
+    state: restarted

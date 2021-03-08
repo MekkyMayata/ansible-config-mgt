@@ -20,3 +20,4 @@
   ignore_errors: "{{ ansible_check_mode }}"
   when: nginx_license_status is not defined
   notify: (Handler) Run NGINX
+
