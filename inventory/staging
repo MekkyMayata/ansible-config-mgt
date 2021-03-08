@@ -1,0 +1,16 @@
+[nfs]
+host1 ansible_host=172.31.32.10
+
+[webservers]
+host2 ansible_host=172.31.32.11
+host3 ansible_host=172.31.32.12
+host4 ansible_host=172.31.32.13
+
+[db]
+host5 ansible_host=172.31.32.14
+
+[jenkins]
+host6 ansible_host=172.31.32.15
+
+[lb]
+host7 ansible_host=172.31.32.16
