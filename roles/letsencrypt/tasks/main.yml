@@ -13,7 +13,8 @@
 - include_tasks: "setup-{{ ansible_os_family }}-certbot.yml"
  
 - name: Create and Install Cert Using {{ certbot_plugin }} Plugin
-  command: "certbot --{{ certbot_plugin|nginx }} -d  {{ certbot_site_names[inventory_hostname_short] }} -m {{ certbot_mail_address }} --agree-tos --noninteractive --redirect"
+  command: "certbot --{{ certbot_plugin }} -d  {{ certbot_site_names[inventory_hostname_short] }} -m {{ certbot_mail_address }} --agree-tos --noninteractive --redirect"
+  when: "{{ use_apache_certbot_plugin }}"
  
    
 - name: Set Letsencrypt Cronjob for Certificate Auto Renewal
