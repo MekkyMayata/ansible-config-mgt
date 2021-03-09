@@ -54,15 +54,6 @@
       group: root
       mode: 0644
 
-  # update the apache config file
-  - name: template the apache config file to /etc/httpd/sites-available/tooling.conf
-    ansible.builtin.template:
-      src: apache-config.j2
-      dest: /etc/httpd/sites-available/tooling.conf
-      owner: root
-      group: root
-      mode: 0644
-
   # create a virtual host directory 
   - name: creating apache virtual host directory
     ansible.builtin.file:
@@ -73,6 +64,15 @@
       - path: sites-available
       - path: sites-enabled
 
+  # update the apache config file
+  - name: template the apache config file to /etc/httpd/sites-available/tooling.conf
+    ansible.builtin.template:
+      src: apache-config.j2
+      dest: /etc/httpd/sites-available/tooling.conf
+      owner: root
+      group: root
+      mode: 0644
+
   # setup importingg of virtual host files from external
   - name: updating base apache config to include virtual hosts in site-enabled directory
     lineinfile:
@@ -81,7 +81,7 @@
       owner: root
   
   # set up symbolic link for virtual host file
-  - name: setiing symbolic link for server config file
+  - name: setting symbolic link for server config file
     ansible.builtin.file:
       src: /etc/httpd/sites-available/tooling.conf 
       dest: /etc/httpd/sites-enabled/tooling.conf
