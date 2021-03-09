@@ -4,5 +4,5 @@
     repo: https://github.com/MekkyMayata/tooling.git
     dest: /home/ec2-user/toolings
 
-- name: import the tooling db
-  shell: "mysql {{  mysql_databases.name }} -p < /home/ec2-user/tooling/tooling-db.sql"
+# - name: import the tooling db
+#   shell: "mysql -u webaccess -h {{ }} tooling -p < /home/ec2-user/tooling/tooling-db.sql"
