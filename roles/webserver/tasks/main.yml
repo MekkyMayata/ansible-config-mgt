@@ -87,5 +87,5 @@
       dest: /etc/httpd/sites-enabled/tooling.conf
       owner: root
       group: root
-      state:
+      state: link
   
