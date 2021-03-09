@@ -16,13 +16,10 @@
     name: '*'
     state: latest
 
-- name: install java
+- name: install java and jenkins
   yum:
-    name: "{{ item }}"
+    name: ['java-1.8.0-openjdk-devel', 'jenkins']
     state: present
-  with_items:
-    - java-1.8.0-openjdk-devel
-    - jenkins
 
 - name: allow systemd to reread configs
   ansible.builtin.systemd:

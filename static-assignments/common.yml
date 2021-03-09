@@ -1,5 +1,4 @@
 ---
-
 - name: play for all hosts
   hosts: all
   become: yes
@@ -10,8 +9,8 @@
       name: chrony
       state: latest
   
-  - name: Enable chronyd daemon
-    service:
-      name: chronyd
-      state: started
-      enabled: true
+- name: Enable chronyd daemon
+  service:
+    name: chronyd
+    state: started
+    enabled: true

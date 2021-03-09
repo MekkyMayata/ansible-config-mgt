@@ -1,5 +1,4 @@
 ---
-
 - name: play for jenkins server
   become: true
   hosts: jenkins

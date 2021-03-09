@@ -16,16 +16,5 @@
       tags:
         - always
 
-# absolute path is returned for each of the special variables below
-# hence error when running above task
-
-# - name: collate variables from env specific file if it exists
-#   hosts: all
-#   tasks:
-#   - debug: var=inventory_hostname
-#   - debug: var=inventory_file
-#   - debug: var=playbook_dir
-#   - include_vars:
-#       dir: "{{ playbook_dir }}/../env-vars"
-#       extensions:
-#         - 'yml'
+# absolute path is returned for each of the special variables (playbook_dir and inventory_file)
+# hence error when running task with {{ playbook_dir }} and {{ inventory_file }}
