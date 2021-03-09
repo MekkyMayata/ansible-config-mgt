@@ -7,6 +7,6 @@ certbot_site_names: {
 # certbot_package: "python3-certbot-apache"
 
 # directly set this to apache if an apache server ssl is configured
-certbot_plugin: nginx
+certbot_plugin: apache
 use_apache_certbot_plugin: false
 certbot_mail_address: okpallannaemeka@gmail.com
