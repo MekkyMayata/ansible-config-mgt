@@ -1,5 +1,5 @@
 [nfs]
-host1 ansible_host=172.31.0.10
+host1 ansible_host=172.31.8.173
 
 [webservers]
 host2 ansible_host=172.31.0.11
