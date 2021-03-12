@@ -1,11 +1,26 @@
 ---
-
-- name: General infrastructure configuration
+- name: Include dynamic variables
   hosts: all
 
-# general config
-- name: importing common playbook
+- name: import the common playbook
   import_playbook: ../static-assignments/common.yml
+  tags:
+    - always
+
+#[DEPRECATION WARNING]: 'include' for playbook includes. 
+# You should use 'import_playbook' instead. 
+# This feature will be removed in version 2.12. 
+# Deprecation warnings can be 
+# disabled by setting deprecation_warnings=False in ansible.cfg.
+
+# - name: include the env-vars playbook
+#   ansible.builtin.include: ../dynamic-assignments/env-vars.yml
+#   tags:
+#     - always
+- name: include the env-vars playbook
+  import_playbook: ../dynamic-assignments/env-vars.yml
+  tags:
+    - always
 
 # configure nfs server
 - name: loading play for NFS server(s)
@@ -16,5 +31,18 @@
   import_playbook: ../static-assignments/db.yml
 
 # configure webservers
-- name: loading play for webserver(s)
+- name: Webserver assignment
   import_playbook: ../static-assignments/webservers.yml
+
+# configure loadbalancer
+- name: Loadbalancers assignment
+  import_playbook: ../static-assignments/loadbalancers.yml
+  when: load_balancer_is_required
+
+# setup ssl
+- name: Letsencrypt assignment
+  import_playbook: ../static-assignments/letsencrypt.yml
+
+# configure jenkins server
+- name: jenkins assignment
+  import_playbook: ../static-assignments/jenkins.yml
