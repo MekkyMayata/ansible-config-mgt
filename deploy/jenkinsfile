@@ -17,8 +17,7 @@ pipeline {
                 }
             }
         }
-<<<<<<< HEAD
-
+        
         stage('Package') {
             steps {
                 script {
@@ -42,7 +41,5 @@ pipeline {
                 }
             }
         }
-=======
->>>>>>> a6d80d0e64c1c2a720b0879124dcdefa5743af80
     }
 }
