@@ -23,26 +23,26 @@
     - always
 
 # configure nfs server
-- name: loading play for NFS server(s)
-  import_playbook: ../static-assignments/nfs.yml
+# - name: loading play for NFS server(s)
+#   import_playbook: ../static-assignments/nfs.yml
 
-# configure database server
-- name: loading play for database server(s)
-  import_playbook: ../static-assignments/db.yml
+# # configure database server
+# - name: loading play for database server(s)
+#   import_playbook: ../static-assignments/db.yml
 
 # configure webservers
-- name: Webserver assignment
-  import_playbook: ../static-assignments/webservers.yml
+# - name: Webserver assignment
+#   import_playbook: ../static-assignments/webservers.yml
 
-# configure loadbalancer
-- name: Loadbalancers assignment
-  import_playbook: ../static-assignments/loadbalancers.yml
-  when: load_balancer_is_required
+# # configure loadbalancer
+# - name: Loadbalancers assignment
+#   import_playbook: ../static-assignments/loadbalancers.yml
+#   when: load_balancer_is_required
 
-# setup ssl
-- name: Letsencrypt assignment
-  import_playbook: ../static-assignments/letsencrypt.yml
+# # setup ssl
+# - name: Letsencrypt assignment
+#   import_playbook: ../static-assignments/letsencrypt.yml
 
-# configure jenkins server
-- name: jenkins assignment
-  import_playbook: ../static-assignments/jenkins.yml
+# # configure jenkins server
+# - name: jenkins assignment
+#   import_playbook: ../static-assignments/jenkins.yml
