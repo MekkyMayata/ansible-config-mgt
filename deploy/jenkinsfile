@@ -3,18 +3,18 @@ pipeline {
 
     stages {
         stage('SCM Checkout') {
-            steps(
+            steps{
                 git branch: 'main', url: 'https://github.com/MekkyMayata/ansible-config-mgt.git'
-            )
+            }
         }
 
         stage('Execute Ansible') {
-            steps(
+            steps{
                 withEnv(['ANSIBLE_CONFIG="${WORKSPACE}/deploy/ansible.cfg"']) {
                     // some block
                     ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/dev', playbook: 'playbooks/site.yml'
                 }
-            )
+            }
         }
 
         stage('Clean workspace on condition (True)') {
