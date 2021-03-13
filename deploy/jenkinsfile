@@ -3,6 +3,7 @@ pipeline {
     environment {
         // withEnv pipeline syntax fails so resort to environment
         ANSIBLE_CONFIG = "${WORKSPACE}/deploy/ansible.cfg"
+        COLLECTIONS_PATHS = "~/.ansible/collections"
     }
 
     stages {
