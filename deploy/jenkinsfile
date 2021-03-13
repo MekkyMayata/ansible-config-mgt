@@ -5,7 +5,7 @@ pipeline {
         stage('SCM Checkout') {
             steps(
                 // clone unto local workspace
-                git branch: 'main', url: 'https://github.com/MekkyMayata/ansible-config-mgt.git'
+                git url: 'https://github.com/MekkyMayata/ansible-config-mgt.git'
             )
         }
 
