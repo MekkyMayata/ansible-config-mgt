@@ -10,7 +10,7 @@ pipeline {
 
         stage('Execute Ansible') {
             steps{
-                withEnv(['ANSIBLE_CONFIG="${WORKSPACE}/deploy/ansible.cfg"']) {
+                withEnv(['ANSIBLE_CONFIG="${env.WORKSPACE}/deploy/ansible.cfg"']) {
                     // some block
                     sh 'echo $ANSIBLE_CONFIG'
                     ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/dev', playbook: 'playbooks/site.yml'
