@@ -18,7 +18,9 @@ pipeline {
         }
 
         stage('Clean workspace on condition (True)') {
-            cleanWs cleanWhenSuccess: false, cleanWhenUnstable: false
+            steps{
+                cleanWs cleanWhenSuccess: false, cleanWhenUnstable: false
+            }
         }
     }
 }
