@@ -15,7 +15,9 @@ pipeline {
 
         stage('Execute Ansible') {
             steps{
+                sh 'whoami'
                 echo "$ANSIBLE_CONFIG"
+                echo "$COLLECTIONS_PATHS"
                 ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/dev', playbook: 'playbooks/site.yml'
             }
         }
