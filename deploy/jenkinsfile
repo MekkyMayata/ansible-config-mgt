@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        // withEnv pipeline syntax fails so resort to environment
+        ANSIBLE_CONFIG = "${WORKSPACE}/deploy/ansible.cfg"
+    }
 
     stages {
         stage('SCM Checkout') {
@@ -10,11 +14,8 @@ pipeline {
 
         stage('Execute Ansible') {
             steps{
-                withEnv(['ANSIBLE_CONFIG="${env.WORKSPACE}/deploy/ansible.cfg"']) {
-                    // some block
-                    echo "$ANSIBLE_CONFIG"
-                    ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/dev', playbook: 'playbooks/site.yml'
-                }
+                echo "$ANSIBLE_CONFIG"
+                ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/dev', playbook: 'playbooks/site.yml'
             }
         }
 
