@@ -2,44 +2,23 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
-            steps {
-                script {
-                    sh 'echo "Building Stage"'
+        stage('SCM Checkout') {
+            steps(
+                // clone unto local workspace
+                git branch: 'main', url: 'https://github.com/MekkyMayata/ansible-config-mgt.git'
+            )
+        }
+        stage('Execute Ansible') {
+            steps(
+                withEnv(['ANSIBLE_CONFIG="${WORKSPACE}/deploy/ansible.cfg"']) {
+                    // some block
+                    ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/dev', playbook: 'playbooks/site.yml'
                 }
-            }
+            )
         }
 
-        stage('Test') {
-            steps {
-                script {
-                    sh 'echo "Testing Stage"'
-                }
-            }
-        }
-
-        stage('Package') {
-            steps {
-                script {
-                    sh 'echo "Packaging Stage"'
-                }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                script {
-                    sh 'echo "Deploying Stage"'
-                }
-            }
-        }
-
-        stage('Cleanup') {
-            steps {
-                script {
-                    sh 'echo "Cleaning up"'
-                }
-            }
+        stage('Clean workspace on condition (True)') {
+            cleanWs cleanWhenSuccess: false, cleanWhenUnstable: false
         }
     }
 }
